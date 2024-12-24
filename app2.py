@@ -8,7 +8,7 @@ app = Flask(__name__)
 server = app  
 dashboard = Dash(__name__, server=server, url_base_pathname='/dashboard/')
 
-API_KEY = 'yXcUn6haV3nAcW1UlLUlbe6LEozZwVUu'  
+API_KEY = 'Вставьте свой ключ'  
 
 
 def get_weather_data(city, api_key, days=1):
