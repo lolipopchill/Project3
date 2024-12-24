@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды для маршрута</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .weather-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Прогноз погоды для маршрута</h1>
+    <form method="post">
+        <label for="cities">Введите точки маршрута (через запятую):</label>
+        <input type="text" id="cities" name="cities" placeholder="Например: Москва, Санкт-Петербург, Казань" required>
+        
+        <label for="days">Выберите количество дней:</label>
+        <select id="days" name="days">
+            <option value="1">1 день</option>
+            <option value="3">3 дня</option>
+            <option value="5">5 дней</option>
+        </select>
+        
+        <button type="submit">Получить прогноз</button>
+    </form>
+    
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    {% if weather_info %}
+        <div class="weather-info">
+            <h2>Прогноз погоды</h2>
+            {% for city_data in weather_info %}
+                <h3>{{ city_data.city }}</h3>
+                <ul>
+                    {% for forecast in city_data.forecasts %}
+                        <li>
+                            Дата: {{ forecast.date }}<br>
+                            Температура: {{ forecast.temperature }}°C<br>
+                            Скорость ветра: {{ forecast.wind_speed }} м/с<br>
+                            Вероятность осадков: {{ forecast.precipitation_probability }}%
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>
